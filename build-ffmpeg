@@ -536,9 +536,8 @@ EOF
     fi
 
     build_done "x265" "3.5"
-  fi
+    fi
   CONFIGURE_OPTIONS+=("--enable-libx265")
-fi
 
 if build "libvpx" "1.10.0"; then
   download "https://github.com/webmproject/libvpx/archive/refs/tags/v1.10.0.tar.gz" "libvpx-1.10.0.tar.gz"
