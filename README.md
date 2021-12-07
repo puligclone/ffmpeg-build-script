@@ -31,10 +31,20 @@ Open your command line and run (curl needs to be installed):
 ```bash
 
 # Without GPL and non-free codes, see https://ffmpeg.org/legal.html 
-$ bash <(curl -s "https://raw.githubusercontent.com/markus-perl/ffmpeg-build-script/master/web-install.sh?v1")
+!sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+!sudo apt-get update
+!sudo apt-get install gcc-10 g++-10
+!sudo ln -s -f /usr/bin/g++-10 /usr/bin/g++
+!sudo ln -s -f /usr/bin/gcc-10 /usr/bin/gcc
+!bash <(curl -s "https://raw.githubusercontent.com/markus-perl/ffmpeg-build-script/master/web-install.sh?v1")
 
 # With GPL and non-free codes, see https://ffmpeg.org/legal.html 
-$ bash <(curl -s "https://raw.githubusercontent.com/puligclone/ffmpeg-build-script/master/web-install-gpl-and-non-free.sh?v1")
+!sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+!sudo apt-get update
+!sudo apt-get install gcc-10 g++-10
+!sudo ln -s -f /usr/bin/g++-10 /usr/bin/g++
+!sudo ln -s -f /usr/bin/gcc-10 /usr/bin/gcc
+!bash <(curl -s "https://raw.githubusercontent.com/puligclone/ffmpeg-build-script/master/web-install-gpl-and-non-free.sh?v1")
 ```
 
 This command downloads the build script and automatically starts the build process.
@@ -42,7 +52,7 @@ This command downloads the build script and automatically starts the build proce
 ### Common installation (macOS, Linux)
 
 ```bash
-$ git clone https://github.com/markus-perl/ffmpeg-build-script.git
+$ git clone https://github.com/puligclone/ffmpeg-build-script.git
 $ cd ffmpeg-build-script
 $ ./build-ffmpeg --build
 ```
