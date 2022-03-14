@@ -833,7 +833,7 @@ fi
 build "ffmpeg" "$FFMPEG_VERSION"
 download "https://ffmpeg.org/releases/ffmpeg-5.0.tar.gz" "FFmpeg-release-$FFMPEG_VERSION.tar.bz2"
 # shellcheck disable=SC2086
-CD /content/ffmpeg-build/packages/FFmpeg-release-5.0
+cd /content/ffmpeg-build/packages/FFmpeg-release-5.0
 ./configure "${CONFIGURE_OPTIONS[@]}" \
   --disable-debug \
   --disable-doc \
