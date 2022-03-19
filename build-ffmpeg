@@ -428,28 +428,18 @@ if command_exists "python3"; then
 fi
 
 if ! $MACOS_M1; then
-  if build "svtav1" "0.9.0"; then
+  if build "svtav1" "0.9.1"; then
     # Last known working commit which passed CI Tests from HEAD branch
-    download "https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/master/SVT-AV1-master.tar.gz" "svtav1-0.9.0.tar.gz"
-    cd "${PACKAGES}"/svtav1-0.9.0//Build/linux || exit
+    download "https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/master/SVT-AV1-master.tar.gz" "svtav1-0.9.1.tar.gz"
+    cd "${PACKAGES}"/svtav1-0.9.1//Build/linux || exit
     execute cmake -DCMAKE_INSTALL_PREFIX="${WORKSPACE}" -DENABLE_SHARED=off -DBUILD_SHARED_LIBS=OFF ../.. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
     execute make -j $MJOBS
     execute make install
     execute cp SvtAv1Enc.pc "${WORKSPACE}/lib/pkgconfig/"
     execute cp SvtAv1Dec.pc "${WORKSPACE}/lib/pkgconfig/"
-    build_done "svtav1" "0.9.0";
+    build_done "svtav1" "0.9.1";
   fi
   CONFIGURE_OPTIONS+=("--enable-libsvtav1")
-fi
-
-if command_exists "cargo"; then
-  if build "rav1e" "0.5.0-beta"; then
-    execute cargo install cargo-c
-    download "https://github.com/xiph/rav1e/archive/refs/tags/v0.5.0-beta.tar.gz"
-    execute cargo cinstall --prefix="${WORKSPACE}" --library-type=staticlib --crt-static --release
-    build_done "rav1e" "0.5.0-beta"
-  fi
-  CONFIGURE_OPTIONS+=("--enable-librav1e")
 fi
 
 if $NONFREE_AND_GPL; then
@@ -534,27 +524,6 @@ fi
 CONFIGURE_OPTIONS+=("--enable-libvpx")
 
 if $NONFREE_AND_GPL; then
-  if build "xvidcore" "1.3.7"; then
-    download "https://downloads.xvid.com/downloads/xvidcore-1.3.7.tar.gz"
-    cd build/generic || exit
-    execute ./configure --prefix="${WORKSPACE}" --disable-shared --enable-static
-    execute make -j $MJOBS
-    execute make install
-
-    if [[ -f ${WORKSPACE}/lib/libxvidcore.4.dylib ]]; then
-      execute rm "${WORKSPACE}/lib/libxvidcore.4.dylib"
-    fi
-
-    if [[ -f ${WORKSPACE}/lib/libxvidcore.so ]]; then
-      execute rm "${WORKSPACE}"/lib/libxvidcore.so*
-    fi
-
-    build_done "xvidcore" "1.3.7"
-  fi
-  CONFIGURE_OPTIONS+=("--enable-libxvid")
-fi
-
-if $NONFREE_AND_GPL; then
   if build "vid_stab" "1.1.0"; then
     download "https://github.com/georgmartius/vid.stab/archive/v1.1.0.tar.gz" "vid.stab-1.1.0.tar.gz"
 
@@ -573,7 +542,6 @@ if $NONFREE_AND_GPL; then
 fi
 
 if build "av1" "3.3"; then
-  # libaom ae2be80 == v3.1.2
   download "https://aomedia.googlesource.com/aom/+archive/refs/heads/main.tar.gz" "av1.tar.gz" "av1"
   make_dir "$PACKAGES"/aom_build
   cd "$PACKAGES"/aom_build || exit
