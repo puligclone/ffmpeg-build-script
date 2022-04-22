@@ -646,7 +646,7 @@ fi
 CONFIGURE_OPTIONS+=("--enable-libopencore_amrnb" "--enable-libopencore_amrwb")
 
 if build "opus" "1.3.1"; then
-  download "https://github.com/xiph/opus/archive/refs/heads/master.zip"
+  download "https://github.com/xiph/opus/archive/refs/tags/v1.3.1.tar.gz"
   execute ./autogen.sh
   execute ./configure --prefix="${WORKSPACE}" --disable-shared --enable-static --disable-extra-programs
   execute make -j $MJOBS
