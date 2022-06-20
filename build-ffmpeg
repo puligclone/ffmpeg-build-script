@@ -541,7 +541,7 @@ if $NONFREE_AND_GPL; then
   CONFIGURE_OPTIONS+=("--enable-libvidstab")
 fi
 
-if build "av1" "3.3"; then
+if build "av1" "3.4"; then
   download "https://aomedia.googlesource.com/aom/+archive/refs/heads/main.tar.gz" "av1.tar.gz" "av1"
   make_dir "$PACKAGES"/aom_build
   cd "$PACKAGES"/aom_build || exit
@@ -553,19 +553,19 @@ if build "av1" "3.3"; then
   execute make -j $MJOBS
   execute make install
 
-  build_done "av1" "3.3"
+  build_done "av1" "3.4"
 fi
 CONFIGURE_OPTIONS+=("--enable-libaom")
 
-if build "zimg" "3.0.3"; then
-  download "https://github.com/sekrit-twc/zimg/archive/refs/tags/release-3.0.3.tar.gz" "zimg-3.0.3.tar.gz" "zimg"
+if build "zimg" "3.0.4"; then
+  download "https://github.com/sekrit-twc/zimg/archive/refs/tags/release-3.0.4.tar.gz" "zimg-3.0.4.tar.gz" "zimg"
   cd zimg-release-3.0.3 || exit
   execute "${WORKSPACE}/bin/libtoolize" -i -f -q
   execute ./autogen.sh --prefix="${WORKSPACE}"
   execute ./configure --prefix="${WORKSPACE}" --enable-static --disable-shared
   execute make -j $MJOBS
   execute make install
-  build_done "zimg" "3.0.3"
+  build_done "zimg" "3.0.4"
 fi
 CONFIGURE_OPTIONS+=("--enable-libzimg")
 
