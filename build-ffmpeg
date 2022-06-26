@@ -403,11 +403,11 @@ if $NONFREE_AND_GPL; then
 fi
 
 if build "cmake" "3.22.1"; then
-  download "https://github.com/Kitware/CMake/releases/download/v3.22.1/cmake-3.22.1.tar.gz"
+  download "https://github.com/Kitware/CMake/releases/download/v3.22.5/cmake-3.22.5.tar.gz"
   execute ./configure --prefix="${WORKSPACE}" --parallel="${MJOBS}" -- -DCMAKE_USE_OPENSSL=OFF
   execute make -j $MJOBS
   execute make install
-  build_done "cmake" "3.22.1"
+  build_done "cmake" "3.22.5"
 fi
 
 ##
@@ -430,7 +430,7 @@ fi
 if ! $MACOS_M1; then
   if build "svtav1" "1.1.0"; then
     # Last known working commit which passed CI Tests from HEAD branch
-    download "https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/master/SVT-AV1-master.tar.gz" "svtav1-1.1.0.tar.gz"
+    download "https://github.com/BlueSwordM/SVT-AV1/archive/refs/heads/master.zip" "svtav1-1.1.0.tar.gz"
     cd "${PACKAGES}"/svtav1-1.1.0//Build/linux || exit
     execute cmake -DCMAKE_INSTALL_PREFIX="${WORKSPACE}" -DENABLE_SHARED=off -DBUILD_SHARED_LIBS=OFF ../.. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
     execute make -j $MJOBS
@@ -559,7 +559,7 @@ CONFIGURE_OPTIONS+=("--enable-libaom")
 
 if build "zimg" "3.0.4"; then
   download "https://github.com/sekrit-twc/zimg/archive/refs/tags/release-3.0.4.tar.gz" "zimg-3.0.4.tar.gz" "zimg"
-  cd zimg-release-3.0.3 || exit
+  cd zimg-release-3.0.4 || exit
   execute "${WORKSPACE}/bin/libtoolize" -i -f -q
   execute ./autogen.sh --prefix="${WORKSPACE}"
   execute ./configure --prefix="${WORKSPACE}" --enable-static --disable-shared
@@ -772,7 +772,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 build "ffmpeg" "$FFMPEG_VERSION"
-download "https://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2" "FFmpeg-release-$FFMPEG_VERSION.tar.bz2"
+download "https://ffmpeg.org/releases/ffmpeg-5.0.1.tar.bz2" "FFmpeg-release-$FFMPEG_VERSION.tar.bz2"
 # shellcheck disable=SC2086
 ./configure "${CONFIGURE_OPTIONS[@]}" \
   --disable-debug \
@@ -781,7 +781,6 @@ download "https://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2" "FFmpeg-release-$
   --enable-pthreads \
   --enable-static \
   --enable-small \
-  --enable-libzimg \
   --enable-version3 \
   --extra-cflags="${CFLAGS}" \
   --extra-ldexeflags="${LDEXEFLAGS}" \
